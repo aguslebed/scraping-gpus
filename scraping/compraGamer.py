@@ -1,3 +1,4 @@
+from requests import head
 from baseScrapingClass import BaseScraper
 from bs4 import BeautifulSoup
 from playwright.sync_api import sync_playwright
@@ -34,15 +35,16 @@ class CompraGamer(BaseScraper):
         products = []
         for product in parsed:
             try:
+                ################### NOMBRE ###################
                 name_tag = product.find('h3', class_='product-card__title cg__fw-400 mb-2 ng-star-inserted')
                 if not name_tag:
                     continue
                 
-                # Usamos .strip() para limpiar espacios al principio y al final
                 name = name_tag.text.strip()
                 if name.startswith("Placa de Video") == False:
                     continue
 
+                ################### IMAGEN ###################
                 img_tag = product.find('img')
                 img_url = ""
                 if img_tag and img_tag.has_attr('src'):
@@ -50,17 +52,23 @@ class CompraGamer(BaseScraper):
                 elif img_tag and img_tag.has_attr('data-src'):
                     img_url = img_tag['data-src']
                 
-                
-                
+                ################### PRECIO ###################
                 price_tag = product.find('span', class_='txt_price')
                 if not price_tag:
                     continue
                 price = clean_price(price_tag.text)
                 
+                ################### URL ###################
                 url = product.get('href')
                 final_url = f"{self.base_url}{url}"
+                
+                ################### CHIPSET ###################
                 chipset = find_chipset(name)
+                
+                ################### FECHA ###################
                 date = datetime.now()
+                
+                ################### GPU ###################
                 gpu = Gpu(name,chipset, price, final_url, img_url, False, 'Compra Gamer', date)
                 products.append(gpu.get_obj())    
             except Exception as e:
