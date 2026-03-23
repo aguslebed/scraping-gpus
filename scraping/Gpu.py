@@ -1,5 +1,5 @@
 class Gpu:
-    def __init__(self, name,chipset, price, url, image_url, outlet, store):
+    def __init__(self, name,chipset, price, url, image_url, outlet, store, date):
         self.name = name
         self.chipset = chipset
         self.price = price
@@ -7,6 +7,7 @@ class Gpu:
         self.image_url = image_url
         self.outlet = outlet
         self.store = store
+        self.last_update = date
         
     def get_obj(self):
         return {
@@ -16,5 +17,6 @@ class Gpu:
             "url": self.url,
             "image_url": self.image_url,
             "outlet": self.outlet,
-            "store": self.store
+            "store": self.store,
+            "last_update": self.last_update
         }
