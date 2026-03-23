@@ -25,6 +25,37 @@ def insert_gpu(gpu):
 
 def insert_price(price):
     try:
-        price_colection.insert_one(price)
+        # Obtenemos el inicio y fin del día actual según la fecha del precio
+        day_start = price['date'].replace(hour=0, minute=0, second=0, microsecond=0)
+        day_end = price['date'].replace(hour=23, minute=59, second=59, microsecond=999999)
+        
+        # Filtramos por esa misma placa de video y en el día de hoy
+        filter_query = {
+            'gpu_id': price['gpu_id'],
+            'date': {'$gte': day_start, '$lte': day_end}
+        }
+        
+        # Buscamos si ya hay un precio guardado hoy
+        existing_price = price_colection.find_one(filter_query)
+        
+        if existing_price:
+            # Si el precio es exactamente igual al que ya estaba hoy, no hacemos nada.
+            if existing_price['price'] == price['price']:
+                return
+            else:
+                # Si el precio cambió durante el mismo día, actualizamos el registro
+                # con el nuevo precio y la nueva hora exacta
+                update_doc = {
+                    '$set': {
+                        'price': price['price'],
+                        'date': price['date'],
+                        'store': price['store']
+                    }
+                }
+                price_colection.update_one({'_id': existing_price['_id']}, update_doc)
+        else:
+            # Si no hay ningún precio hoy para esta GPU, lo insertamos nuevo
+            price_colection.insert_one(price)
+            
     except Exception as e:
         print(f'Error al insertar el precio: {e}')

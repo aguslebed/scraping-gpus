@@ -56,7 +56,7 @@ class CompraGamer(BaseScraper):
                 price_tag = product.find('span', class_='txt_price')
                 if not price_tag:
                     continue
-                price = clean_price(price_tag.text)
+                price = int(clean_price(price_tag.text))
                 
                 ################### URL ###################
                 url = product.get('href')
