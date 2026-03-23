@@ -11,15 +11,18 @@ def find_chipset(name):
 
 def split_price(gpu):
     return {
-        "price": gpu.price,
-        "date": gpu.last_update,
-        "store": gpu.store
+        "price": gpu["price"],
+        "date": gpu["last_update"],
+        "store": gpu["store"]
     }, {
-        "name": gpu.name,
-        "chipset": gpu.chipset,
-        "url": gpu.url,
-        "image_url": gpu.image_url,
-        "outlet": gpu.outlet,
-        "store": gpu.store,
-        "last_update": gpu.last_update
+        "name": gpu["name"],
+        "chipset": gpu["chipset"],
+        "url": gpu["url"],
+        "image_url": gpu["image_url"],
+        "outlet": gpu["outlet"],
+        "store": gpu["store"],
+        "last_update": gpu["last_update"]
     }
+
+def clean_price(price):
+    return price.replace("$", "").replace(".", "")

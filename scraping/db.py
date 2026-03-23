@@ -12,10 +12,16 @@ except Exception as e:
 
 def insert_gpu(gpu):
     try:
-        gpu_collection.insert_one(gpu)
+        # Buscamos si la GPU ya existe por su URL (que es única)
+        existing_gpu = gpu_collection.find_one({'url': gpu['url']})
+        if existing_gpu:
+            return existing_gpu['_id']
+        else:
+            result = gpu_collection.insert_one(gpu)
+            return result.inserted_id
     except Exception as e:
         print(f'Error al insertar la gpu: {e}')
-
+        return None
 
 def insert_price(price):
     try:
