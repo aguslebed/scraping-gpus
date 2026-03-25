@@ -29,14 +29,14 @@ class CompraGamer(BaseScraper):
         return soup
 
     def parse(self, html):
-        return html.findAll('a', class_='product-card cg__primary-card medium vertical responsive notSelected')
+        return html.findAll('a', class_='product-card')
 
     def extract_products(self, parsed):
         products = []
         for product in parsed:
             try:
                 ################### NOMBRE ###################
-                name_tag = product.find('h3', class_='product-card__title cg__fw-400 mb-2 ng-star-inserted')
+                name_tag = product.find('h3', class_='product-card__title')
                 if not name_tag:
                     continue
                 
@@ -70,6 +70,12 @@ class CompraGamer(BaseScraper):
                 
                 ################### GPU ###################
                 gpu = Gpu(name,chipset, price, final_url, img_url, False, 'Compra Gamer', date)
+                
+                ################### OUTLET ###################
+                div_outlet = driver.find_element(By.XPATH, "//div[contains(text(), 'OUTLET')]")
+                if div_outlet:
+                    gpu.is_outlet = True
+
                 products.append(gpu.get_obj())    
             except Exception as e:
                 import traceback
