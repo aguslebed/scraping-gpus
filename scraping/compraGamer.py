@@ -45,12 +45,12 @@ class CompraGamer(BaseScraper):
                     continue
 
                 ################### IMAGEN ###################
-                img_tag = product.find('img')
                 img_url = ""
-                if img_tag and img_tag.has_attr('src'):
-                    img_url = img_tag['src']
-                elif img_tag and img_tag.has_attr('data-src'):
-                    img_url = img_tag['data-src']
+                img_container = product.find('div', class_='product-card__image')
+                if img_container:
+                    img_tag = img_container.find('img')
+                    if img_tag:
+                        img_url = img_tag.get('src') or img_tag.get('data-src') or ""
                 
                 ################### PRECIO ###################
                 price_tag = product.find('span', class_='txt_price')
@@ -72,7 +72,7 @@ class CompraGamer(BaseScraper):
                 gpu = Gpu(name,chipset, price, final_url, img_url, False, 'Compra Gamer', date)
                 
                 ################### OUTLET ###################
-                div_outlet = driver.find_element(By.XPATH, "//div[contains(text(), 'OUTLET')]")
+                div_outlet = product.find('div', class_='product-card__badge')
                 if div_outlet:
                     gpu.is_outlet = True
 

@@ -42,7 +42,7 @@ const Home = () => {
     return acc;
   }, {});
 
-  let chipsets = Object.values(chipsetStats).sort((a, b) => a.name.localeCompare(b.name));
+  let chipsets = Object.values(chipsetStats).sort((a, b) => a.minPrice - b.minPrice);
 
   if (search.trim()) {
     chipsets = chipsets.filter(c => c.name.toLowerCase().includes(search.toLowerCase()));
