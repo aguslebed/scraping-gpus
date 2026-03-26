@@ -1,10 +1,10 @@
 def find_chipset(name):
     splited_name = name.split()
     for i in splited_name:
-        if i == "RTX" or i == "GTX" or i == "RX":
-            return i + " " + splited_name[splited_name.index(i) + 1]
-        if i == "Intel":
-            return i + " " + splited_name[splited_name.index(i) + 1] + " " + splited_name[splited_name.index(i) + 2]
+        if i.upper() == "RTX" or i.upper() == "GTX" or i.upper() == "RX":
+            return (i + " " + splited_name[splited_name.index(i) + 1]).upper()
+        if i.upper() == "INTEL":
+            return (i + " " + splited_name[splited_name.index(i) + 1] + " " + splited_name[splited_name.index(i) + 2]).upper()
     return None
 
     """Separa el objeto gpu en dos objetos, uno para precios y otro para gpus"""

@@ -1,4 +1,5 @@
 import compraGamer
+import maximusGaming
 from utils import split_price
 from db import insert_price, insert_gpu
 
@@ -10,8 +11,9 @@ def main():
     # 1. Agrega aquí las instancias de tus nuevos scrapers
     scrapers = [
         compraGamer.CompraGamer(headers, 'https://compragamer.com'),
+        maximusGaming.Maximus(headers, 'https://www.maximus.com.ar'),
         # HardGamers.HardGamers(headers, 'https://hardgamers.com.ar'),
-        # Maximus.Maximus(headers, 'https://maximus.com.ar'),
+        
     ]
     
     # 2. Iteramos sobre cada tienda en la lista
