@@ -1,7 +1,7 @@
 import sys, os
 sys.path.append(os.path.join(os.path.dirname(os.path.abspath(__file__)), 'tiendas'))
 
-from tiendas import goldenTechStore, compraGamer, maximusGaming
+from tiendas import goldenTechStore, compraGamer, maximusGaming, fullHard, mexx
 from utils import split_price
 from db import insert_price, insert_gpu
 
@@ -15,7 +15,8 @@ def main():
         compraGamer.CompraGamer(headers, 'https://compragamer.com'),
         maximusGaming.Maximus(headers, 'https://www.maximus.com.ar'),
         goldenTechStore.GoldenTechStore(headers, 'https://goldentechstore.com.ar/placas-de-video/'),
-        
+        fullHard.FullH4rd(headers, 'https://www.fullh4rd.com.ar'),
+        mexx.Mexx(headers, 'https://www.mexx.com.ar/productos-rubro/placas-de-video/'),
     ]
     
     # 2. Iteramos sobre cada tienda en la lista
