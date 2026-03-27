@@ -1,5 +1,7 @@
-import compraGamer
-import maximusGaming
+import sys, os
+sys.path.append(os.path.join(os.path.dirname(os.path.abspath(__file__)), 'tiendas'))
+
+from tiendas import goldenTechStore, compraGamer, maximusGaming
 from utils import split_price
 from db import insert_price, insert_gpu
 
@@ -12,7 +14,7 @@ def main():
     scrapers = [
         compraGamer.CompraGamer(headers, 'https://compragamer.com'),
         maximusGaming.Maximus(headers, 'https://www.maximus.com.ar'),
-        # HardGamers.HardGamers(headers, 'https://hardgamers.com.ar'),
+        goldenTechStore.GoldenTechStore(headers, 'https://goldentechstore.com.ar/placas-de-video/'),
         
     ]
     
