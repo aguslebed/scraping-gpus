@@ -52,6 +52,7 @@ const ChipsetDetail = () => {
     // Group prices by Day
     const pricesByDay = {};
     for (const price of prices) {
+      if (price.price <= 0) continue;
       // Assuming price.date is ISO format like YYYY-MM-DDTHH:mm...
       const dateOnly = price.date.split('T')[0];
       if (!pricesByDay[dateOnly]) {

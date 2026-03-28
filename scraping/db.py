@@ -25,6 +25,10 @@ def insert_gpu(gpu):
 
 def insert_price(price):
     try:
+        # Prevenir inserción de precios erróneos (0 o negativos)
+        if price is None or price.get('price', 0) <= 0:
+            return
+
         # Obtenemos el inicio y fin del día actual según la fecha del precio
         day_start = price['date'].replace(hour=0, minute=0, second=0, microsecond=0)
         day_end = price['date'].replace(hour=23, minute=59, second=59, microsecond=999999)
