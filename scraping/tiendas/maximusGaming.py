@@ -17,8 +17,8 @@ class Maximus(BaseScraper):
             browser = p.chromium.launch(headless=False)
             page = browser.new_page()
             page.goto(url, wait_until="networkidle")
-            page.get_by_placeholder("Buscar poductos").fill("placa de video")
-            page.get_by_placeholder("Buscar poductos").press("Enter")
+            page.get_by_placeholder("Buscar en Maximus").fill("placa de video")
+            page.get_by_placeholder("Buscar en Maximus").press("Enter")
             page.wait_for_timeout(2000) 
             
             while True:

@@ -103,7 +103,7 @@ class Venex(BaseScraper):
                 price_container = product.select_one('span.current-price')
                 if price_container:
                     price_text = price_container.text.strip()
-                    price = clean_price(price_text)
+                    price = int(clean_price(price_text))
                 else:
                     price = 0
 
