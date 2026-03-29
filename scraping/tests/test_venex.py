@@ -1,7 +1,8 @@
-import sys
-sys.path.append('./scraping')
-sys.path.append('./scraping/tiendas')
-from scraping.tiendas.venex import Venex
+import sys, os
+BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+sys.path.append(BASE_DIR)
+sys.path.append(os.path.join(BASE_DIR, 'tiendas'))
+from tiendas.venex import Venex
 
 def test_venex():
     print("Testing Venex scraper...")

@@ -1,5 +1,7 @@
 import sys, os
-sys.path.append(os.path.join(os.path.dirname(os.path.abspath(__file__)), 'scraping'))
+BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+sys.path.append(BASE_DIR)
+sys.path.append(os.path.join(BASE_DIR, 'tiendas'))
 
 from tiendas.libreOpcion import LibreOpcion
 

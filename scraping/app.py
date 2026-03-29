@@ -1,7 +1,7 @@
 import sys, os
 sys.path.append(os.path.join(os.path.dirname(os.path.abspath(__file__)), 'tiendas'))
 
-from tiendas import goldenTechStore, compraGamer, maximusGaming, fullHard, mexx, libreOpcion, venex
+from tiendas import goldenTechStore, compraGamer, maximusGaming, fullHard, mexx, libreOpcion, venex, quantumHardStore
 from utils import split_price
 from db import insert_price, insert_gpu
 
@@ -17,7 +17,8 @@ def main():
         fullHard.FullH4rd(headers, 'https://www.fullh4rd.com.ar'),
         mexx.Mexx(headers, 'https://www.mexx.com.ar/productos-rubro/placas-de-video/'),
         libreOpcion.LibreOpcion(headers, 'https://www.libreopcion.com/placas-de-video'),
-        venex.Venex(headers, 'https://www.venex.com.ar/componentes-de-pc/placas-de-video')
+        venex.Venex(headers, 'https://www.venex.com.ar/componentes-de-pc/placas-de-video'),
+        quantumHardStore.QuantumHardStore(headers, 'https://quantumhardstore.com/componentes/placas-de-video/')
     ]
 
     for scraper in scrapers:
