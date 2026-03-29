@@ -12,16 +12,37 @@ except Exception as e:
 
 def insert_gpu(gpu):
     try:
+        gpu['in_stock'] = True
+        
         # Buscamos si la GPU ya existe por su URL (que es única)
         existing_gpu = gpu_collection.find_one({'url': gpu['url']})
         if existing_gpu:
+            # Si existe, actualizamos su última fecha y la volvemos a poner en stock
+            update_doc = {
+                '$set': {
+                    'last_update': gpu['last_update'],
+                    'in_stock': True
+                }
+            }
+            gpu_collection.update_one({'_id': existing_gpu['_id']}, update_doc)
             return existing_gpu['_id']
         else:
             result = gpu_collection.insert_one(gpu)
             return result.inserted_id
     except Exception as e:
-        print(f'Error al insertar la gpu: {e}')
+        print(f'Error al insertar o actualizar la gpu: {e}')
         return None
+
+def mark_out_of_stock(store_name, start_time):
+    try:
+        result = gpu_collection.update_many(
+            {'store': store_name, 'last_update': {'$lt': start_time}},
+            {'$set': {'in_stock': False}}
+        )
+        return result.modified_count
+    except Exception as e:
+        print(f'Error al marcar sin stock para {store_name}: {e}')
+        return 0
 
 def insert_price(price):
     try:

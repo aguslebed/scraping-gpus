@@ -19,7 +19,7 @@ const Home = () => {
       const gpusWithPrices = gpusData.map(g => ({
         ...g,
         price: latestPrices[g._id] ? latestPrices[g._id].price : 0
-      })).filter(g => g.price > 0);
+      })).filter(g => g.price > 0 && g.in_stock !== false);
 
       setGpus(gpusWithPrices);
       setLoading(false);
@@ -53,10 +53,10 @@ const Home = () => {
   return (
     <div>
       <div className="search-container">
-        <input 
-          type="text" 
-          className="search-input" 
-          placeholder="Buscar chipset (ej. RX 7600, RTX 4060)..." 
+        <input
+          type="text"
+          className="search-input"
+          placeholder="Buscar chipset (ej. RX 7600, RTX 4060)..."
           value={search}
           onChange={(e) => setSearch(e.target.value)}
         />
@@ -67,16 +67,16 @@ const Home = () => {
       ) : (
         <div className="grid">
           {chipsets.map(chipset => (
-            <Link key={chipset.name} to={`/chipset/${encodeURIComponent(chipset.name)}`} className="card" style={{textDecoration: 'none'}}>
+            <Link key={chipset.name} to={`/chipset/${encodeURIComponent(chipset.name)}`} className="card" style={{ textDecoration: 'none' }}>
               <h2 className="card-title">{chipset.name}</h2>
               <p className="card-subtitle mb-2">{chipset.count} modelos disponibles</p>
               <div style={{ marginTop: 'auto' }}>
-                <span style={{ fontSize: '0.85rem', color: 'var(--text-secondary)'}}>Desde</span>
-                <p style={{ color: 'var(--success)', fontWeight: 'bold', fontSize: '1.25rem'}}>{Formatter.format(chipset.minPrice)}</p>
+                <span style={{ fontSize: '0.85rem', color: 'var(--text-secondary)' }}>Desde</span>
+                <p style={{ color: 'var(--success)', fontWeight: 'bold', fontSize: '1.25rem' }}>{Formatter.format(chipset.minPrice)}</p>
               </div>
             </Link>
           ))}
-          {chipsets.length === 0 && <p style={{gridColumn: '1 / -1', textAlign: 'center'}}>No se encontraron chipsets.</p>}
+          {chipsets.length === 0 && <p style={{ gridColumn: '1 / -1', textAlign: 'center' }}>No se encontraron chipsets.</p>}
         </div>
       )}
     </div>

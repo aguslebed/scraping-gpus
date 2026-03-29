@@ -3,7 +3,8 @@ sys.path.append(os.path.join(os.path.dirname(os.path.abspath(__file__)), 'tienda
 
 from tiendas import goldenTechStore, compraGamer, maximusGaming, fullHard, mexx, libreOpcion, venex, quantumHardStore
 from utils import split_price
-from db import insert_price, insert_gpu
+from db import insert_price, insert_gpu, mark_out_of_stock
+from datetime import datetime
 
 def main():
     headers = {
@@ -24,6 +25,7 @@ def main():
     for scraper in scrapers:
         tienda_nombre = scraper.__class__.__name__
         print(f"\n--- Iniciando extracción en {tienda_nombre} ---")
+        start_time = datetime.now()
         
         try:
             resultados = scraper.scrape()
@@ -38,7 +40,8 @@ def main():
                     price['gpu_id'] = gpu_id
                     insert_price(price)
             
-            print(f"[{tienda_nombre}] Precios guardados exitosamente.\n")
+            marked = mark_out_of_stock(tienda_nombre, start_time)
+            print(f"[{tienda_nombre}] Precios guardados exitosamente. {marked} tarjetas marcadas sin stock.\n")
                     
         except Exception as e:
             print(f"Error crítico scrapeando la tienda {tienda_nombre}: {e}")

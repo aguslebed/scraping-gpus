@@ -16,7 +16,7 @@ const ChipsetDetail = () => {
     Promise.all([getGpus(), getPrices()]).then(([gpusData, pricesData]) => {
       // Filter GPUs strictly to this chipset
       const chipsetGpus = gpusData.filter(g => g.chipset === chipsetName);
-      
+
       const latestPrices = {};
       pricesData.forEach(p => {
         if (!latestPrices[p.gpu_id] || new Date(p.date) > new Date(latestPrices[p.gpu_id].date)) {
@@ -30,14 +30,14 @@ const ChipsetDetail = () => {
       })).filter(g => g.price > 0);
 
       setGpus(gpusWithPrices);
-      
+
       // Get all gpu ideas for this chipset
       const gpuIds = new Set(chipsetGpus.map(g => g._id));
-      
+
       // Get all prices that belong to GPUs in this chipset
       const relevantPrices = pricesData.filter(p => gpuIds.has(p.gpu_id));
       setPrices(relevantPrices);
-      
+
       setLoading(false);
     }).catch(err => {
       console.error(err);
@@ -48,7 +48,7 @@ const ChipsetDetail = () => {
   // Transform data for the chart: Group by Date and find the Minimum Price
   const chartData = useMemo(() => {
     if (!prices.length) return [];
-    
+
     // Group prices by Day
     const pricesByDay = {};
     for (const price of prices) {
@@ -89,15 +89,21 @@ const ChipsetDetail = () => {
 
   if (loading) return <p className="text-center mt-2">Cargando datos de {chipsetName}...</p>;
 
-  // Sort GPUs by price ascending for display
-  const displayGpus = [...gpus].sort((a, b) => a.price - b.price);
+  // Sort GPUs by price ascending for display, putting out of stock items at the end
+  const displayGpus = [...gpus].sort((a, b) => {
+    const aStock = a.in_stock !== false;
+    const bStock = b.in_stock !== false;
+    if (aStock && !bStock) return -1;
+    if (!aStock && bStock) return 1;
+    return a.price - b.price;
+  });
 
   return (
     <div>
       <Link to="/" style={{ color: 'var(--accent-color)', marginBottom: '1rem', display: 'inline-block' }}>
         &larr; Volver a Chipsets
       </Link>
-      
+
       <h1 className="mb-2">{chipsetName}</h1>
       <p className="card-subtitle mb-3">Las gráficas más económicas encontradas para este chipset a lo largo del tiempo.</p>
 
@@ -107,10 +113,10 @@ const ChipsetDetail = () => {
             <LineChart data={chartData} margin={{ top: 5, right: 20, bottom: 5, left: 20 }}>
               <CartesianGrid strokeDasharray="3 3" stroke="var(--border-color)" vertical={false} />
               <XAxis dataKey="date" stroke="var(--text-secondary)" tick={{ fill: 'var(--text-secondary)' }} tickMargin={10} minTickGap={20} />
-              <YAxis 
-                stroke="var(--text-secondary)" 
-                tick={{ fill: 'var(--text-secondary)' }} 
-                tickFormatter={(val) => Formatter.format(val)} 
+              <YAxis
+                stroke="var(--text-secondary)"
+                tick={{ fill: 'var(--text-secondary)' }}
+                tickFormatter={(val) => Formatter.format(val)}
                 domain={['auto', 'auto']}
               />
               <Tooltip content={<CustomTooltip />} />
@@ -119,7 +125,7 @@ const ChipsetDetail = () => {
           </ResponsiveContainer>
         </div>
       ) : (
-        <p className="mb-3 text-center" style={{color: 'var(--text-secondary)'}}>No hay historial de precios suficiente para graficar.</p>
+        <p className="mb-3 text-center" style={{ color: 'var(--text-secondary)' }}>No hay historial de precios suficiente para graficar.</p>
       )}
 
       <h2 className="mb-2">Publicaciones Actuales ({displayGpus.length})</h2>
