@@ -1,0 +1,54 @@
+version: '3.8'
+
+services:
+  db:
+    image: mongo:latest
+    container_name: gpus_mongo
+    volumes:
+      - mongo_data:/data/db
+
+  api:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: gpus_api
+    command: python manage.py runserver 0.0.0.0:8000
+    volumes:
+      - ./backend:/app
+    ports:
+      - "8000:8000"
+    environment:
+      - MONGO_URI=mongodb://db:27017/
+    depends_on:
+      - db
+
+  web:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    container_name: gpus_web
+    command: npm run dev -- --host
+    volumes:
+      - ./frontend:/app
+      - /app/node_modules
+    ports:
+      - "5173:5173"
+    depends_on:
+      - api
+
+  scraper:
+    build:
+      context: ./scraping
+      dockerfile: Dockerfile
+    container_name: gpus_scraper
+    volumes:
+      - ./scraping:/app
+    environment:
+      - MONGO_URI=mongodb://db:27017/
+    depends_on:
+      - db
+    profiles:
+      - scraping
+
+volumes:
+  mongo_data:

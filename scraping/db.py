@@ -1,7 +1,9 @@
+import os
 from pymongo import MongoClient
 
 try:
-    client = MongoClient('localhost', 27017)
+    mongo_uri = os.environ.get('MONGO_URI', 'mongodb://localhost:27017/')
+    client = MongoClient(mongo_uri)
     database = client['Scraping']
     gpu_collection = database['gpus']
     price_colection = database['prices']

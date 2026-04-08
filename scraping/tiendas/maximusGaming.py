@@ -14,7 +14,7 @@ class Maximus(BaseScraper):
     def fetch(self, url):
         combined_html = ""
         with sync_playwright() as p:
-            browser = p.chromium.launch(headless=False)
+            browser = p.chromium.launch(headless=True)
             page = browser.new_page()
             page.goto(url, wait_until="networkidle")
             page.get_by_placeholder("Buscar en Maximus").fill("placa de video")

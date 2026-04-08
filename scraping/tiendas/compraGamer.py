@@ -13,7 +13,7 @@ class CompraGamer(BaseScraper):
 
     def fetch(self, url):
         with sync_playwright() as p:
-            browser = p.chromium.launch(headless=False)
+            browser = p.chromium.launch(headless=True)
             page = browser.new_page()
             page.goto(url, wait_until="networkidle")
             page.get_by_placeholder("Buscá por productos, marcas y categorías").fill("placa de video")

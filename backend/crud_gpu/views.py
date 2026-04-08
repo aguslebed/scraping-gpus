@@ -1,8 +1,10 @@
+import os
 from django.http import JsonResponse
 from pymongo import MongoClient
 
 # Create your views here.
-client = MongoClient('localhost', 27017)
+mongo_uri = os.environ.get('MONGO_URI', 'mongodb://localhost:27017/')
+client = MongoClient(mongo_uri)
 db = client['Scraping']
 
 def get_gpus(request):
