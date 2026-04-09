@@ -20,7 +20,7 @@ class LibreOpcion(BaseScraper):
         with sync_playwright() as p:
             browser = p.chromium.launch(headless=True)
             page = browser.new_page(extra_http_headers=self.headers)
-            page.goto(self.base_url, wait_until="networkidle")
+            page.goto(self.base_url, wait_until="domcontentloaded")
             page.wait_for_timeout(2000)
 
             previous_scroll = -1

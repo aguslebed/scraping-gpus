@@ -15,7 +15,7 @@ class CompraGamer(BaseScraper):
         with sync_playwright() as p:
             browser = p.chromium.launch(headless=True)
             page = browser.new_page()
-            page.goto(url, wait_until="networkidle")
+            page.goto(url, wait_until="domcontentloaded")
             page.get_by_placeholder("Buscá por productos, marcas y categorías").fill("placa de video")
             page.get_by_placeholder("Buscá por productos, marcas y categorías").press("Enter")
             page.wait_for_timeout(2000) 

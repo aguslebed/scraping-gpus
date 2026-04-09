@@ -17,7 +17,7 @@ class GoldenTechStore(BaseScraper):
         with sync_playwright() as p:
             browser = p.chromium.launch(headless=True)
             page = browser.new_page()
-            page.goto(url, wait_until="networkidle")
+            page.goto(url, wait_until="domcontentloaded")
             
             # El link ya tiene el filtro asique solo bajamos con scroll infinito de a poco
             while True:

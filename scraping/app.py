@@ -1,4 +1,5 @@
 import sys, os
+sys.stdout.reconfigure(line_buffering=True)
 sys.path.append(os.path.join(os.path.dirname(os.path.abspath(__file__)), 'tiendas'))
 
 from tiendas import goldenTechStore, compraGamer, maximusGaming, fullHard, mexx, libreOpcion, venex, quantumHardStore
