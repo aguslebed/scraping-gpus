@@ -32,7 +32,7 @@ El atributo `-d` los hace correr en segundo plano. Podrás acceder a tu app desd
 Dado que el Scraper suele ser un trabajo por lotes que arranca, extrae todo y termina, le configuramos un "perfil" especial. Para correr una extracción de datos:
 
 ```bash
-docker compose run --rm scraper
+docker compose run --rm scraper python app.py
 ```
 Esto creará el contenedor temporalmente, correrá las rutinas con Playwright en su entorno virtualizado insertando los datos a MongoDB y luego lo eliminará (solo el contenedor, los datos quedan a salvo).
 

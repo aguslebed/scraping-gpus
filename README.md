@@ -30,7 +30,7 @@ Una vez finalizada la construcción inicial, la página web estará operativa in
 A diferencia de la página web que corre perpetuamente, el Scraper funciona bajo demanda como un proceso por lotes. Para iniciar el minado de precios actualizado desde las páginas web y depositar esa nueva información en tu base de datos local, debes ejecutar:
 
 ```bash
-docker compose run --rm scraper
+docker compose run --rm scraper python app.py
 ```
 
 El script descargará los navegadores virtuales, lanzará las extracciones a cada tienda configurada y al finalizar cerrará y borrará su contenedor temporal de tu equipo, dejando intactos los nuevos precios en el volumen de MongoDB.
