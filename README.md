@@ -2,6 +2,24 @@
 
 Este repositorio contiene un sistema completo para la extracción, seguimiento y visualización de precios de placas de video (GPUs) de las principales tiendas de hardware en Argentina. El objetivo del proyecto es automatizar la recolección de precios, llevar un control de stock y conformar un historial para el análisis comparativo del mercado.
 
+## Recorrido por la plataforma
+
+Al ingresar a la web, nos encontramos con la página principal, que presenta un catálogo de placas de video. Para organizar la gran cantidad de datos, todos los productos se encuentran agrupados y separados por chipset. De esta forma, es posible observar rápidamente los distintos modelos que utilizan un mismo procesador gráfico.
+
+![Página principal](Imagenes/Pagina%20principal.png)
+
+Además, para hacer la navegación más cómoda, la plataforma cuenta con herramientas de búsqueda. Los usuarios pueden buscar placas ingresando su nombre o aplicar filtros específicos por chipset para obtener resultados más precisos.
+
+![Filtro por nombre](Imagenes/Filtro%20por%20nombre.png)
+
+Cuando se selecciona un componente, se ingresa a la página particular de ese producto. Allí se exhibe toda la información clave y se destaca un gráfico con el historial de precios. Esto resulta práctico para comprender cómo evolucionó el valor de esa placa gráfica con el tiempo. El sistema también advierte sobre condiciones especiales, utilizando etiquetas para marcar si una placa es un producto de "Outlet" o si actualmente se encuentra "Sin stock".
+
+![Página de producto](Imagenes/Pagina%20de%20producto.png)
+
+Finalmente, en la misma vista del producto, se incluye una lista con todas las tiendas que venden ese modelo específico. Este apartado funciona como un comparador, mostrando los precios actuales en cada local comercial junto con un botón para visitar la tienda directamente. Las tiendas estan ordenadas por precio, de menor a mayor.
+
+![Tiendas de un producto](Imagenes/Tiendas%20de%20un%20producto.png)
+
 ## Estructura del Proyecto
 
 El sistema se compone de cuatro piezas fundamentales, todas integradas mediante Docker para asegurar su portabilidad:
